@@ -84,5 +84,21 @@ namespace TddQuickStart.Tests
             var actual = sut.CreateNonce();
             Assert.Equal(expected, actual);
         }
+
+        [Theory, AutoMoq]
+        public void NonceGeneratedIsNonceStored(
+            Nonce expected,
+            [Frozen] Mock<INonceMethod> method,
+            [Frozen] Mock<INonceStore> store,
+            NonceGen sut)
+        {
+            method
+                .Setup(x => x.GenerateNonce())
+                .Returns(expected);
+            sut.CreateNonce();
+            store.Verify(
+                x => x.SaveNonce(expected), 
+                Times.Once());
+        }
     }
 }

@@ -21,7 +21,9 @@ namespace TddQuickStart
 
         public Nonce CreateNonce()
         {
-            return Method.GenerateNonce();
+            var nonce = Method.GenerateNonce();
+            Store.SaveNonce(nonce);
+            return nonce;
         }
     }
 
@@ -38,10 +40,14 @@ namespace TddQuickStart
         }
     }
 
-    public interface INonceStore { }
+    public interface INonceStore
+    {
+        void SaveNonce(Nonce input);
+    }
 
     public class Nonce
     {
+        public string NonceKey { get; set; }
         public int NonceValue { get; set; }
         public long NonceExpiration { get; set; }
     }
