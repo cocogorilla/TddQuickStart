@@ -22,6 +22,7 @@ namespace TddQuickStart.Tests
         }
         #endregion
 
+        #region verify testing framework and integrations is running
         [Fact]
         public void XunitIsFunctional()
         {
@@ -41,6 +42,15 @@ namespace TddQuickStart.Tests
             DefaultNonceMethod sut)
         {
             Assert.IsAssignableFrom<INonceMethod>(sut);
+        }
+        #endregion
+
+        [Theory, AutoMoq]
+        public void NonceMethodIsCorrect(
+            [Frozen] INonceMethod expected,
+            NonceGen sut)
+        {
+            Assert.Same(expected, sut.Method);
         }
     }
 }
