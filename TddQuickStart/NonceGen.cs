@@ -10,8 +10,10 @@ namespace TddQuickStart
     {
         public NonceGen(INonceMethod method)
         {
+            if (method == null) throw new ArgumentNullException(nameof(method));
             Method = method;
         }
+
         public INonceMethod Method { get; }
     }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
+using Ploeh.AutoFixture.Idioms;
 using Ploeh.AutoFixture.Xunit2;
 using Xunit;
 
@@ -51,6 +52,15 @@ namespace TddQuickStart.Tests
             NonceGen sut)
         {
             Assert.Same(expected, sut.Method);
+        }
+
+        [Theory, AutoMoq]
+        public void ConstructorsAreNullGuarded(
+            [Frozen] IFixture fixture,
+            GuardClauseAssertion assertion)
+        {
+            assertion.Verify(
+                typeof(NonceGen).GetConstructors());
         }
     }
 }
