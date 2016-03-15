@@ -17,5 +17,13 @@ namespace TddQuickStart.Tests
         {
             Assert.True(true);
         }
+
+        [Fact]
+        public void AutoMoqIntegrationIsFunctional()
+        {
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var sut = fixture.Create<INonceMethod>();
+            Assert.IsAssignableFrom<INonceMethod>(sut);
+        }
     }
 }

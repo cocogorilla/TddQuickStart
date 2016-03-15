@@ -9,4 +9,8 @@ namespace TddQuickStart
     public class NonceGen
     {
     }
+
+    public interface INonceMethod { }
+
+    public class DefaultNonceMethod : INonceMethod { }
 }
