@@ -97,8 +97,28 @@ namespace TddQuickStart.Tests
                 .Returns(expected);
             sut.CreateNonce();
             store.Verify(
-                x => x.SaveNonce(expected), 
+                x => x.SaveNonce(expected),
                 Times.Once());
         }
+
+        [Theory, AutoMoq]
+        public void ValidNonceFoundIsCorrect(
+            Nonce storedNonce,
+            [Frozen] Mock<INonceStore> store,
+            NonceGen sut)
+        {
+            // nonce has not expired
+            storedNonce.NonceExpiration = Int64.MaxValue;
+            store
+                .Setup(x => x.RetrieveNonce(storedNonce.NonceKey))
+                .Returns(storedNonce);
+            var actual = sut.ValidateNonce(
+                storedNonce.NonceKey,
+                // match on correct nonce value
+                storedNonce.NonceValue);
+            Assert.True(actual);
+        }
+
+        
     }
 }

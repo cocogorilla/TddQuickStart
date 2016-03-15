@@ -25,6 +25,11 @@ namespace TddQuickStart
             Store.SaveNonce(nonce);
             return nonce;
         }
+
+        public bool ValidateNonce(string nonceKey, int matchValue)
+        {
+            return true;
+        }
     }
 
     public interface INonceMethod
@@ -43,6 +48,7 @@ namespace TddQuickStart
     public interface INonceStore
     {
         void SaveNonce(Nonce input);
+        Nonce RetrieveNonce(string nonceKey);
     }
 
     public class Nonce
