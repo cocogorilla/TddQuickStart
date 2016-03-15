@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultNonceMethod.cs" />
+    <Compile Include="INonceMethod.cs" />
+    <Compile Include="INonceStore.cs" />
+    <Compile Include="ITimeSource.cs" />
+    <Compile Include="Nonce.cs" />
     <Compile Include="NonceGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
