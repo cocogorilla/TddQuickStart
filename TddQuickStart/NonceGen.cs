@@ -28,7 +28,7 @@ namespace TddQuickStart
 
         public bool ValidateNonce(string nonceKey, int matchValue)
         {
-            return true;
+            return Store.RetrieveNonce(nonceKey).NonceValue == matchValue;
         }
     }
 
