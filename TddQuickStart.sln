@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TddQuickStart.Tests", "TddQuickStart.Tests\TddQuickStart.Tests.csproj", "{C8A1A2A1-0687-4662-95DF-5E67B68BA724}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TddQuickStart", "TddQuickStart\TddQuickStart.csproj", "{BAE8CD81-19E7-45A6-A3AF-EA1FF900A201}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8A1A2A1-0687-4662-95DF-5E67B68BA724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A1A2A1-0687-4662-95DF-5E67B68BA724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A1A2A1-0687-4662-95DF-5E67B68BA724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A1A2A1-0687-4662-95DF-5E67B68BA724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAE8CD81-19E7-45A6-A3AF-EA1FF900A201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAE8CD81-19E7-45A6-A3AF-EA1FF900A201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAE8CD81-19E7-45A6-A3AF-EA1FF900A201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAE8CD81-19E7-45A6-A3AF-EA1FF900A201}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
