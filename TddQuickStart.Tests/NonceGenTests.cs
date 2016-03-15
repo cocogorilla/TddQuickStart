@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using Ploeh.AutoFixture.Idioms;
@@ -69,6 +70,19 @@ namespace TddQuickStart.Tests
             NonceGen sut)
         {
             Assert.Same(expected, sut.Store);
+        }
+
+        [Theory, AutoMoq]
+        public void NonceReturnedIsGeneratedByMethod(
+            Nonce expected,
+            [Frozen] Mock<INonceMethod> method,
+            NonceGen sut)
+        {
+            method
+                .Setup(x => x.GenerateNonce())
+                .Returns(expected);
+            var actual = sut.CreateNonce();
+            Assert.Equal(expected, actual);
         }
     }
 }
