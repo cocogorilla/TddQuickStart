@@ -12,6 +12,16 @@ namespace TddQuickStart.Tests
 {
     public class NonceGenTests
     {
+        #region setup autofixture xunit moq customization to enable declaritive moqed tests
+        public class AutoMoqAttribute : AutoDataAttribute
+        {
+            public AutoMoqAttribute() :
+                base(new Fixture().Customize(
+                    new AutoMoqCustomization()))
+            { }
+        }
+        #endregion
+
         [Fact]
         public void XunitIsFunctional()
         {
@@ -23,6 +33,13 @@ namespace TddQuickStart.Tests
         {
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
             var sut = fixture.Create<INonceMethod>();
+            Assert.IsAssignableFrom<INonceMethod>(sut);
+        }
+
+        [Theory, AutoMoq]
+        public void AutoMoqAttributeIntegrationIsFunctional(
+            DefaultNonceMethod sut)
+        {
             Assert.IsAssignableFrom<INonceMethod>(sut);
         }
     }
