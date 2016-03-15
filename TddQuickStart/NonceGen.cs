@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,10 +9,14 @@ namespace TddQuickStart
 {
     public class NonceGen
     {
-        public NonceGen(INonceMethod method, INonceStore store)
+        private readonly ITimeSource _timeSource;
+
+        public NonceGen(INonceMethod method, INonceStore store, ITimeSource timeSource)
         {
+            _timeSource = timeSource;
             if (method == null) throw new ArgumentNullException(nameof(method));
             if (store == null) throw new ArgumentNullException(nameof(store));
+            if (timeSource == null) throw new ArgumentNullException(nameof(timeSource));
             Method = method;
             Store = store;
         }
@@ -28,8 +33,15 @@ namespace TddQuickStart
 
         public bool ValidateNonce(string nonceKey, int matchValue)
         {
-            return Store.RetrieveNonce(nonceKey).NonceValue == matchValue;
+            var foundNonce = Store.RetrieveNonce(nonceKey);
+            return foundNonce.NonceValue == matchValue &&
+                foundNonce.NonceExpiration > _timeSource.GetNowEpoch();
         }
+    }
+
+    public interface ITimeSource
+    {
+        long GetNowEpoch();
     }
 
     public interface INonceMethod

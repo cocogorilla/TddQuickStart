@@ -104,11 +104,14 @@ namespace TddQuickStart.Tests
         [Theory, AutoMoq]
         public void ValidNonceFoundIsCorrect(
             Nonce storedNonce,
+            [Frozen] Mock<ITimeSource> timesource,
             [Frozen] Mock<INonceStore> store,
             NonceGen sut)
         {
             // nonce has not expired
-            storedNonce.NonceExpiration = Int64.MaxValue;
+            timesource
+                .Setup(x => x.GetNowEpoch())
+                .Returns(Int64.MinValue);
             store
                 .Setup(x => x.RetrieveNonce(storedNonce.NonceKey))
                 .Returns(storedNonce);
@@ -123,17 +126,40 @@ namespace TddQuickStart.Tests
         public void InvalidNonceFoundIsCorrect(
             Nonce storedNonce,
             int invalidNonce,
+            [Frozen] Mock<ITimeSource> timesource,
             [Frozen] Mock<INonceStore> store,
             NonceGen sut)
         {
-            // nonce has not expired
-            storedNonce.NonceExpiration = Int64.MaxValue;
             store
                 .Setup(x => x.RetrieveNonce(storedNonce.NonceKey))
                 .Returns(storedNonce);
             var actual = sut.ValidateNonce(
                 storedNonce.NonceKey,
+                // match on invalid nonce value
                 invalidNonce);
+            Assert.False(actual);
+        }
+
+        [Theory, AutoMoq]
+        public void NonceExpiredIsCorrect(
+            Nonce storedNonce,
+            int expiredBy,
+            [Frozen] Mock<ITimeSource> timesource,
+            [Frozen] Mock<INonceStore> store,
+            NonceGen sut)
+        {
+            // nonce has expired
+            Assert.True(expiredBy > 0);
+            timesource
+                .Setup(x => x.GetNowEpoch())
+                .Returns(storedNonce.NonceExpiration + expiredBy);
+            store
+                .Setup(x => x.RetrieveNonce(storedNonce.NonceKey))
+                .Returns(storedNonce);
+            var actual = sut.ValidateNonce(
+                storedNonce.NonceKey,
+                // nonce value is match
+                storedNonce.NonceValue);
             Assert.False(actual);
         }
     }
