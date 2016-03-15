@@ -62,5 +62,13 @@ namespace TddQuickStart.Tests
             assertion.Verify(
                 typeof(NonceGen).GetConstructors());
         }
+
+        [Theory, AutoMoq]
+        public void NonceStoreIsCorrect(
+            [Frozen] INonceStore expected,
+            NonceGen sut)
+        {
+            Assert.Same(expected, sut.Store);
+        }
     }
 }
