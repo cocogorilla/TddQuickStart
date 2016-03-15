@@ -126,7 +126,6 @@ namespace TddQuickStart.Tests
         public void InvalidNonceFoundIsCorrect(
             Nonce storedNonce,
             int invalidNonce,
-            [Frozen] Mock<ITimeSource> timesource,
             [Frozen] Mock<INonceStore> store,
             NonceGen sut)
         {
